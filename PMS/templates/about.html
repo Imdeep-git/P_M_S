@@ -1,0 +1,303 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{% block title %}
+About Us - Reserve My Spot
+{% endblock  %}
+
+{% block styles %}
+    <link rel='stylesheet' href="{%static '/css/about.css'%}">
+{% endblock  %}
+   
+
+{% block content%}
+    
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Revolutionizing Parking Management</h1>
+                    <p class="hero-subtitle">Smart, efficient, and user-friendly parking solutions for the modern world</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-cards">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-car"></i>
+                            <span>Smart Booking</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Mobile Access</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="mission-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Our Mission</h2>
+                    <p class="section-subtitle">Transforming urban parking through innovative technology</p>
+                </div>
+                <div class="mission-content">
+                    <div class="mission-text">
+                        <h3>Making Parking Stress-Free</h3>
+                        <p>
+                            At Reserve My Spot, we believe that finding parking shouldn't be a daily struggle. 
+                            Our mission is to create a seamless, intelligent parking ecosystem that benefits 
+                            both drivers and parking facility operators.
+                        </p>
+                        <p>
+                            We leverage cutting-edge technology to provide real-time availability, secure bookings, 
+                            and efficient management tools that transform the parking experience for everyone.
+                        </p>
+                        <div class="mission-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Reduce parking search time by 60%</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Increase facility utilization by 40%</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Minimize carbon footprint</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mission-visual">
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="10000">0</div>
+                                <div class="stat-label">Happy Customers</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="500">0</div>
+                                <div class="stat-label">Partner Locations</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" data-target="25000">0</div>
+                                <div class="stat-label">Parking Spots</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose Reserve My Spot?</h2>
+                    <p class="section-subtitle">Advanced features designed for modern parking needs</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search-location"></i>
+                        </div>
+                        <h3>Real-Time Availability</h3>
+                        <p>
+                            See live parking availability across all partner locations. 
+                            Never waste time driving around looking for a spot.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3>Advance Reservations</h3>
+                        <p>
+                            Book your parking spot hours or days in advance. 
+                            Perfect for events, appointments, and daily commutes.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3>Digital Access Codes</h3>
+                        <p>
+                            Secure access with unique tokens and PIN codes. 
+                            No need for physical tickets or cards.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Smart Analytics</h3>
+                        <p>
+                            Data-driven insights help optimize parking utilization 
+                            and improve customer experience.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Mobile Optimized</h3>
+                        <p>
+                            Fully responsive design works perfectly on all devices. 
+                            Book parking on the go from any smartphone or tablet.
+                        </p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h3>24/7 Support</h3>
+                        <p>
+                            Round-the-clock customer support to help you with 
+                            any issues or questions you might have.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">How It Works</h2>
+                    <p class="section-subtitle">Simple steps to secure your parking spot</p>
+                </div>
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Search & Select</h3>
+                            <p>Browse available parking spots near your destination and choose the perfect one for your needs.</p>
+                        </div>
+                        <div class="step-visual">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Book & Confirm</h3>
+                            <p>Enter your vehicle details, select your preferred time slot, and confirm your booking instantly.</p>
+                        </div>
+                        <div class="step-visual">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Access & Park</h3>
+                            <p>Receive your unique access code and use it to access your reserved parking spot securely.</p>
+                        </div>
+                        <div class="step-visual">
+                            <i class="fas fa-key"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Benefits for Everyone</h2>
+                    <p class="section-subtitle">Creating value for all stakeholders in the parking ecosystem</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-category">
+                        <div class="category-header">
+                            <i class="fas fa-users"></i>
+                            <h3>For Customers</h3>
+                        </div>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Save time searching for parking</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Transparent, competitive pricing</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Guaranteed parking spot</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-leaf"></i>
+                                <span>Reduce environmental impact</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="benefit-category">
+                        <div class="category-header">
+                            <i class="fas fa-building"></i>
+                            <h3>For Organizations</h3>
+                        </div>
+                        <div class="benefit-list">
+                            <div class="benefit-item">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Maximize parking utilization</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-cogs"></i>
+                                <span>Automated management system</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-analytics"></i>
+                                <span>Detailed usage analytics</span>
+                            </div>
+                            <div class="benefit-item">
+                                <i class="fas fa-money-bill-wave"></i>
+                                <span>Increase revenue potential</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Transform Your Parking Experience?</h2>
+                    <p>Join thousands of satisfied customers and partner organizations who have made parking effortless</p>
+                    <div class="cta-actions">
+                        <a href="book_slot.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-car"></i>
+                            Book Your First Slot
+                        </a>
+                        <a href="register_org.html" class="btn btn-secondary btn-lg">
+                            <i class="fas fa-building"></i>
+                            Partner With Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock  %}
+
+{%block scripts%}
+    <script src="{% static '/js/about.js'%}"></script>
+{% endblock  %}
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>{%load static%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Dashboard - Reserve My Spot</title>
+    <link rel="stylesheet" href="{% static '/css/base.css'%}">
+    <link rel="stylesheet" href="{% static '/css/org_dashboard.css'%}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <i class="fas fa-car-side logo-icon"></i>
+                    <span class="logo-text">Reserve My Spot</span>
+                </div>
+
+                <div class="nav-user-section">
+                    <div class="user-info">
+                        <span class="user-name">ABC Organization</span>
+                        <span class="user-role">Organization Admin</span>
+                    </div>
+                    <div class="nav-controls">
+                        <button class="dark-mode-toggle" id="darkModeToggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <div class="user-menu">
+                            <button class="user-menu-toggle" id="userMenuToggle">
+                                <i class="fas fa-user-circle"></i>
+                            </button>
+                            <div class="user-dropdown" id="userDropdown">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-user"></i> Profile
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                                <a href="admin_dashboard.html" class="dropdown-item">
+                                    <i class="fas fa-exchange-alt"></i> Switch to Admin
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="index.html" class="dropdown-item logout">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard-container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <div class="header-content">
+                    <h1>Organization Dashboard</h1>
+                    <p>Manage your parking slots and bookings</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary add-slot-btn" id="addSlotBtn">
+                        <i class="fas fa-plus"></i> Add Slot
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number" data-target="150">0</div>
+                            <div class="stat-label">Total Slots</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon success">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number" data-target="87">0</div>
+                            <div class="stat-label">Active Bookings</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon warning">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number" data-target="63">0</div>
+                            <div class="stat-label">Available Slots</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon info">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-number" data-target="1250">0</div>
+                            <div class="stat-label">Monthly Revenue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions-section">
+                <h2>Quick Actions</h2>
+                <div class="actions-grid">
+                    <div class="action-card" onclick="orgDashboard.showAddSlotModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <h3>Add New Slot</h3>
+                        <p>Create a new parking slot</p>
+                    </div>
+
+                    <div class="action-card" onclick="orgDashboard.showBookingsModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>View Bookings</h3>
+                        <p>Manage current bookings</p>
+                    </div>
+
+                    <div class="action-card" onclick="orgDashboard.showReportsModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>Generate Report</h3>
+                        <p>Download usage reports</p>
+                    </div>
+
+                    <div class="action-card" onclick="orgDashboard.showSettingsModal()">
+                        <div class="action-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <h3>Settings</h3>
+                        <p>Configure organization settings</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slots Management -->
+            <div class="slots-section">
+                <div class="section-header">
+                    <h2>Parking Slots</h2>
+                    <div class="section-controls">
+                        <div class="search-bar">
+                            <input type="text" id="slotsSearch" placeholder="Search slots..." class="search-input">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <select id="slotStatusFilter" class="filter-select">
+                            <option value="all">All Status</option>
+                            <option value="available">Available</option>
+                            <option value="occupied">Occupied</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                        <select id="slotTypeFilter" class="filter-select">
+                            <option value="all">All Types</option>
+                            <option value="2W">Two Wheeler</option>
+                            <option value="4W">Four Wheeler</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="slots-grid" id="slotsGrid">
+                    <!-- Slots will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Recent Bookings -->
+            <div class="bookings-section">
+                <div class="section-header">
+                    <h2>Recent Bookings</h2>
+                    <div class="section-controls">
+                        <div class="search-bar">
+                            <input type="text" id="bookingsSearch" placeholder="Search bookings..."
+                                class="search-input">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <button class="btn btn-secondary" onclick="orgDashboard.exportBookings()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bookings-container">
+                    <div class="bookings-table-container">
+                        <table class="bookings-table" id="bookingsTable">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Customer</th>
+                                    <th>Vehicle</th>
+                                    <th>Slot</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsTableBody">
+                                <!-- Bookings will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="bookings-mobile" id="bookingsMobile">
+                        <!-- Mobile booking cards will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="{% static '/js/base.js'%}"></script>
+    <script src="{% static '/js/org_dashboard.js'%}"></script>
+</body>
+
+</html>

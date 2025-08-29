@@ -1,0 +1,344 @@
+{%extends 'base.html'%}
+{%load static%}
+
+    {%block 'title'%}Register Organization - Reserve My Spot{% endblock %}
+    {% block styles %}<link rel="stylesheet" href="{% static '/css/register_org.css'%}">{% endblock%}
+
+{% block content %}    <main class="main-content">
+        <section class="register-section">
+            <div class="container">
+                <div class="register-container">
+                    <div class="register-header">
+                        <h1 class="register-title">Register Your Organization</h1>
+                        <p class="register-subtitle">Join our parking management network</p>
+                    </div>
+
+                    <!-- Progress Steps -->
+                    <div class="progress-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Organization Info</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Contact Details</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Account Setup</div>
+                        </div>
+                    </div>
+
+                    <form method = "post" action="{% url 'organization-list-create' %}" class="register-form" id="registerForm" >
+                        {% csrf_token %}
+                        <!-- Step 1: Organization Info -->
+                        <div class="form-step active" data-step="1">
+                            <h3 class="step-title">Organization Information</h3>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="organizationName" class="form-label">
+                                        <i class="fas fa-building"></i>
+                                        Organization Name *
+                                    </label>
+                                    <input z
+                                        type="text" 
+                                        id="organizationName" 
+                                        name="name"
+                                        class="form-input" 
+                                        placeholder="Enter organization name"
+                                        data-validate="required|minLength:2"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="organizationType" class="form-label">
+                                        <i class="fas fa-tags"></i>
+                                        Organization Type *
+                                    </label>
+                                    <select 
+                                        id="organizationType" 
+                                        name="org_type"
+                                        class="form-input form-select" 
+                                        data-validate="required"
+                                        required
+                                    >
+                                        <option value="">Select type</option>
+                                        <option value="mall">Shopping Mall</option>
+                                        <option value="office">Office Complex</option>
+                                        <option value="hospital">Hospital</option>
+                                        <option value="university">University/College</option>
+                                        <option value="airport">Airport</option>
+                                        <option value="hotel">Hotel</option>
+                                        <option value="residential">Residential Complex</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description" class="form-label">
+                                    <i class="fas fa-align-left"></i>
+                                    Description
+                                </label>
+                                <textarea 
+                                    id="description" 
+                                    name="description"
+                                    class="form-input form-textarea" 
+                                    placeholder="Brief description of your organization (optional)"
+                                    rows="4"
+                                ></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="totalSlots2W" class="form-label">
+                                        <i class="fas fa-motorcycle"></i>
+                                        Two-Wheeler Slots
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="totalSlots2W" 
+                                        name="total_slots_2w"
+                                        class="form-input" 
+                                        placeholder="Number of 2W slots"
+                                        min="0"
+                                        data-validate="number"
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="totalSlots4W" class="form-label">
+                                        <i class="fas fa-car"></i>
+                                        Four-Wheeler Slots
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="totalSlots4W" 
+                                        name="total_slots_4w"
+                                        class="form-input" 
+                                        placeholder="Number of 4W slots"
+                                        min="0"
+                                        data-validate="number"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Contact Details -->
+                        <div class="form-step" data-step="2">
+                            <h3 class="step-title">Contact Details</h3>
+                            
+                            <div class="form-group">
+                                <label for="address" class="form-label">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Complete Address *
+                                </label>
+                                <textarea 
+                                    id="address" 
+                                    name="address"
+                                    class="form-input form-textarea" 
+                                    placeholder="Enter complete address"
+                                    rows="3"
+                                    data-validate="required|minLength:10"
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="city" class="form-label">
+                                        <i class="fas fa-city"></i>
+                                        City *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="city" 
+                                        name="city"
+                                        class="form-input" 
+                                        placeholder="Enter city"
+                                        data-validate="required|minLength:2"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="state" class="form-label">
+                                        <i class="fas fa-flag"></i>
+                                        State *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="state" 
+                                        name="state"
+                                        class="form-input" 
+                                        placeholder="Enter state"
+                                        data-validate="required|minLength:2"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="zipCode" class="form-label">
+                                        <i class="fas fa-mail-bulk"></i>
+                                        ZIP Code *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="zipCode" 
+                                        name="zip_code"
+                                        class="form-input" 
+                                        placeholder="Enter ZIP code"
+                                        data-validate="required|minLength:5"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="contactPerson" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        Contact Person *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="contactPerson" 
+                                        name="contact_person"
+                                        class="form-input" 
+                                        placeholder="Contact person name"
+                                        data-validate="required|minLength:2"
+                                        required
+                                    >
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="contactPhone" class="form-label">
+                                        <i class="fas fa-phone"></i>
+                                        Phone Number *
+                                    </label>
+                                    <input 
+                                        type="text" 
+                                        id="contactPhone" 
+                                        name="contact_phone"
+                                        class="form-input" 
+                                        placeholder="Enter phone number"
+                                        data-validate="required|phone"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Account Setup -->
+                        <div class="form-step" data-step="3">
+                            <h3 class="step-title">Account Setup</h3>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address *
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email"
+                                    class="form-input" 
+                                    placeholder="Enter email address"
+                                    data-validate="required|email"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="password" class="form-label">
+                                        <i class="fas fa-lock"></i>
+                                        Password *
+                                    </label>
+                                    <div class="password-field">
+                                        <input 
+                                            type="password" 
+                                            id="password" 
+                                            name="password"
+                                            class="form-input" 
+                                            placeholder="Create password"
+                                            data-validate="required|minLength:8"
+                                            required
+                                        >
+                                        <button type="button" class="password-toggle" data-target="password">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-strength" id="passwordStrength"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmPassword" class="form-label">
+                                        <i class="fas fa-lock"></i>
+                                        Confirm Password *
+                                    </label>
+                                    <div class="password-field">
+                                        <input 
+                                            type="password" 
+                                            id="confirmPassword" 
+                                            name="confirmPassword"
+                                            class="form-input" 
+                                            placeholder="Confirm password"
+                                            data-validate="required|minLength:8"
+                                            required
+                                        >
+                                        <button type="button" class="password-toggle" data-target="confirmPassword">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="agreeTerms" name="agreeTerms" data-validate="required" required>
+                                    <span class="checkmark"></span>
+                                    I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a> *
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="subscribeNewsletter" name="subscribeNewsletter">
+                                    <span class="checkmark"></span>
+                                    Subscribe to newsletter and updates
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Form Navigation -->
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary prev-btn" id="prevBtn" style="display: none;">
+                                <i class="fas fa-arrow-left"></i> Previous
+                            </button>
+                            <button type="button" class="btn btn-primary next-btn" id="nextBtn">
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                            <button type="submit" class="btn btn-success submit-btn" id="submitBtn" style="display: block;">
+                                <i class="fas fa-check"></i> Register Organization
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="login-link">
+                        <p>Already have an account? <a href="{% url 'login' %}" class="link">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>{% endblock content %}
+
+
+{% block scripts %}
+    <script src="{% static '/js/register_org.js'%}"></script>
+{% endblock scripts %}
+

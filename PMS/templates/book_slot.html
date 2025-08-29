@@ -1,0 +1,244 @@
+{%extends 'base.html'%}
+{%load static%}
+
+
+{% block title %}
+Book Slot - Reserve My Spot
+
+{% endblock  %}
+
+
+{% block styles %}
+    <link rel='stylesheet' href="{%static '/css/book_slot.css'%}">
+{% endblock  %}
+   
+
+{% block content%}
+   
+    <main class="main-content">
+        <section class="booking-section">
+            <div class="container">
+                <div class="booking-header">
+                    <h1 class="page-title">Book Your Parking Slot</h1>
+                    <p class="page-subtitle">Secure your parking space in just a few simple steps</p>
+                </div>
+
+                <div class="booking-container">
+                    <!-- Slot Selection -->
+                    <div class="booking-card slot-selection-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-map-marker-alt"></i> Select Location</h2>
+                        </div>
+                        
+                        <div class="location-filters">
+                            <div class="filter-group">
+                                <input type="text" id="locationSearch" placeholder="Search locations..." class="search-input">
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <select id="vehicleTypeFilter" class="filter-select">
+                                    <option value="">All Vehicle Types</option>
+                                    <option value="2W">Two Wheeler</option>
+                                    <option value="4W">Four Wheeler</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="available-slots" id="availableSlots">
+                            <!-- Slots will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Booking Form -->
+                    <div class="booking-card booking-form-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-edit"></i> Booking Details</h2>
+                        </div>
+
+                        <form class="booking-form" id="bookingForm" data-validate-form>
+                            <div class="selected-slot-info" id="selectedSlotInfo" style="display: none;">
+                                <div class="slot-preview">
+                                    <h4>Selected Location</h4>
+                                    <div class="slot-details">
+                                        <span class="slot-name" id="selectedSlotName"></span>
+                                        <span class="slot-address" id="selectedSlotAddress"></span>
+                                        <span class="slot-price" id="selectedSlotPrice"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Vehicle Information</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="vehicleType" class="form-label">
+                                            <i class="fas fa-car"></i>
+                                            Vehicle Type *
+                                        </label>
+                                        <select id="vehicleType" name="vehicleType" class="form-input form-select" data-validate="required" required>
+                                            <option value="">Select vehicle type</option>
+                                            <option value="2W">Two Wheeler (Bike/Scooter)</option>
+                                            <option value="4W">Four Wheeler (Car/SUV)</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="vehicleNumber" class="form-label">
+                                            <i class="fas fa-id-card"></i>
+                                            Vehicle Number *
+                                        </label>
+                                        <input type="text" id="vehicleNumber" name="vehicleNumber" class="form-input" 
+                                               placeholder="e.g., KA01AB1234" data-validate="required|vehicleNumber" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="vehicleBrand" class="form-label">
+                                        <i class="fas fa-tag"></i>
+                                        Vehicle Brand/Model
+                                    </label>
+                                    <input type="text" id="vehicleBrand" name="vehicleBrand" class="form-input" 
+                                           placeholder="e.g., Honda City, TVS Apache">
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Contact Information</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="customerName" class="form-label">
+                                            <i class="fas fa-user"></i>
+                                            Full Name *
+                                        </label>
+                                        <input type="text" id="customerName" name="customerName" class="form-input" 
+                                               placeholder="Enter your full name" data-validate="required|minLength:2" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="phoneNumber" class="form-label">
+                                            <i class="fas fa-phone"></i>
+                                            Phone Number *
+                                        </label>
+                                        <input type="tel" id="phoneNumber" name="phoneNumber" class="form-input" 
+                                               placeholder="Enter phone number" data-validate="required|phone" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope"></i>
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="email" name="email" class="form-input" 
+                                           placeholder="Enter email address (optional)" data-validate="email">
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Booking Duration</h3>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="startDate" class="form-label">
+                                            <i class="fas fa-calendar"></i>
+                                            Start Date *
+                                        </label>
+                                        <input type="date" id="startDate" name="startDate" class="form-input" 
+                                               data-validate="required" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="startTime" class="form-label">
+                                            <i class="fas fa-clock"></i>
+                                            Start Time *
+                                        </label>
+                                        <input type="time" id="startTime" name="startTime" class="form-input" 
+                                               data-validate="required" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="endDate" class="form-label">
+                                            <i class="fas fa-calendar"></i>
+                                            End Date *
+                                        </label>
+                                        <input type="date" id="endDate" name="endDate" class="form-input" 
+                                               data-validate="required" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="endTime" class="form-label">
+                                            <i class="fas fa-clock"></i>
+                                            End Time *
+                                        </label>
+                                        <input type="time" id="endTime" name="endTime" class="form-input" 
+                                               data-validate="required" required>
+                                    </div>
+                                </div>
+
+                                <div class="duration-summary" id="durationSummary" style="display: none;">
+                                    <div class="summary-item">
+                                        <span class="label">Duration:</span>
+                                        <span class="value" id="totalDuration">-</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span class="label">Estimated Cost:</span>
+                                        <span class="value" id="totalCost">-</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Additional Options</h3>
+                                
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="needsAssistance" name="needsAssistance">
+                                        <span class="checkmark"></span>
+                                        I need assistance with parking
+                                    </label>
+                                </div>
+
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="smsNotifications" name="smsNotifications" checked>
+                                        <span class="checkmark"></span>
+                                        Send SMS notifications
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="specialRequests" class="form-label">
+                                        <i class="fas fa-comment"></i>
+                                        Special Requests
+                                    </label>
+                                    <textarea id="specialRequests" name="specialRequests" class="form-input form-textarea" 
+                                              placeholder="Any special requests or notes (optional)" rows="3"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">
+                                    <i class="fas fa-arrow-left"></i> Back to Home
+                                </button>
+                                <button type="submit" class="btn btn-success btn-book">
+                                    <i class="fas fa-check-circle"></i> Book Slot
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock  %}
+
+{% block scripts %}
+    <script src="{% static '/js/book_slot.js'%}"></script>
+{% endblock  %}
+

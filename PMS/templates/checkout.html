@@ -1,0 +1,126 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{% block title %}
+Token Verification - Reserve My Spot
+{% endblock  %}
+
+{% block styles %}
+    <link rel='stylesheet' href="{%static '/css/checkout.css'%}">
+{% endblock  %}
+   
+
+{% block content%}
+    <main class="main-content">
+        <section class="checkout-section">
+            <div class="container">
+                <div class="checkout-header">
+                    <h1 class="page-title">Verify Access Code</h1>
+                    <p class="page-subtitle">Enter your token or PIN to verify your parking reservation</p>
+                </div>
+
+                <div class="checkout-container">
+                    <div class="verification-card">
+                        <div class="card-header">
+                            <div class="header-icon">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <h2>Access Verification</h2>
+                            <p>Use either your booking token or PIN code</p>
+                        </div>
+
+                        <div class="verification-tabs">
+                            <button class="verification-tab active" data-method="token">
+                                <i class="fas fa-key"></i>
+                                <span>Token</span>
+                            </button>
+                            <button class="verification-tab" data-method="pin">
+                                <i class="fas fa-lock"></i>
+                                <span>PIN Code</span>
+                            </button>
+                        </div>
+
+                        <form class="verification-form" id="verificationForm">
+                            <!-- Token Input -->
+                            <div class="input-method active" data-method="token">
+                                <div class="form-group">
+                                    <label for="tokenInput" class="form-label">
+                                        <i class="fas fa-key"></i>
+                                        Booking Token
+                                    </label>
+                                    <input type="text" id="tokenInput" name="token" class="form-input token-input" 
+                                           placeholder="Enter your booking token" maxlength="9">
+                                    <div class="input-helper">
+                                        <span>Example: ABC123XYZ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PIN Input -->
+                            <div class="input-method" data-method="pin">
+                                <div class="form-group">
+                                    <label for="pinInput" class="form-label">
+                                        <i class="fas fa-lock"></i>
+                                        4-Digit PIN
+                                    </label>
+                                    <div class="pin-container">
+                                        <input type="text" maxlength="1" class="pin-digit" data-index="0">
+                                        <input type="text" maxlength="1" class="pin-digit" data-index="1">
+                                        <input type="text" maxlength="1" class="pin-digit" data-index="2">
+                                        <input type="text" maxlength="1" class="pin-digit" data-index="3">
+                                    </div>
+                                    <div class="input-helper">
+                                        <span>Enter your 4-digit PIN code</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary verify-btn">
+                                <i class="fas fa-check-circle"></i>
+                                Verify Access
+                            </button>
+                        </form>
+
+                        <div class="verification-help">
+                            <div class="help-section">
+                                <h4><i class="fas fa-question-circle"></i> Need Help?</h4>
+                                <div class="help-links">
+                                    <a href="#" class="help-link" onclick="checkoutManager.showBookingLookup()">
+                                        <i class="fas fa-search"></i>
+                                        Find My Booking
+                                    </a>
+                                    <a href="contact.html" class="help-link">
+                                        <i class="fas fa-headset"></i>
+                                        Contact Support
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-section">
+                        <div class="demo-card">
+                            <h3>Demo Access Codes</h3>
+                            <p>Use these demo codes to test the verification system:</p>
+                            <div class="demo-codes">
+                                <div class="demo-item">
+                                    <span class="demo-label">Token:</span>
+                                    <span class="demo-code" onclick="checkoutManager.fillDemoCode('ABC123XYZ', 'token')">ABC123XYZ</span>
+                                </div>
+                                <div class="demo-item">
+                                    <span class="demo-label">PIN:</span>
+                                    <span class="demo-code" onclick="checkoutManager.fillDemoCode('1234', 'pin')">1234</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock  %}
+
+{% block scripts %}
+    <script src="{% static '/js/checkout.js'%}"></script>
+{% endblock  %}
+

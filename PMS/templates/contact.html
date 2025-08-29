@@ -1,0 +1,296 @@
+
+    
+{%extends 'base.html'%}
+{% load static %} 
+    
+{% block title %}
+Contact Us - Reserve My Spot
+{% endblock  %}
+
+{% block styles %}
+ <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock  %}
+   
+
+{% block content%}
+
+    <main class="main-content">
+        <!-- Contact Hero -->
+        <section class="contact-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Get in Touch</h1>
+                    <p class="hero-subtitle">We're here to help you with any questions or support you need</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Content -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-container">
+                    <!-- Contact Form -->
+                    <div class="contact-form-section">
+                        <div class="form-header">
+                            <h2>Send us a Message</h2>
+                            <p>Fill out the form below and we'll get back to you as soon as possible</p>
+                        </div>
+
+                        <form class="contact-form" id="contactForm" data-validate-form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        First Name *
+                                    </label>
+                                    <input type="text" id="firstName" name="firstName" class="form-input" 
+                                           placeholder="Enter your first name" data-validate="required|minLength:2" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName" class="form-label">
+                                        <i class="fas fa-user"></i>
+                                        Last Name *
+                                    </label>
+                                    <input type="text" id="lastName" name="lastName" class="form-input" 
+                                           placeholder="Enter your last name" data-validate="required|minLength:2" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope"></i>
+                                        Email Address *
+                                    </label>
+                                    <input type="email" id="email" name="email" class="form-input" 
+                                           placeholder="Enter your email address" data-validate="required|email" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">
+                                        <i class="fas fa-phone"></i>
+                                        Phone Number
+                                    </label>
+                                    <input type="tel" id="phone" name="phone" class="form-input" 
+                                           placeholder="Enter your phone number" data-validate="phone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject" class="form-label">
+                                    <i class="fas fa-tag"></i>
+                                    Subject *
+                                </label>
+                                <select id="subject" name="subject" class="form-input form-select" 
+                                        data-validate="required" required>
+                                    <option value="">Select a subject</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="support">Technical Support</option>
+                                    <option value="billing">Billing & Payments</option>
+                                    <option value="booking">Booking Issues</option>
+                                    <option value="partnership">Partnership Opportunities</option>
+                                    <option value="feedback">Feedback & Suggestions</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message" class="form-label">
+                                    <i class="fas fa-comment-alt"></i>
+                                    Message *
+                                </label>
+                                <textarea id="message" name="message" class="form-input form-textarea" 
+                                          placeholder="Enter your message here..." rows="6" 
+                                          data-validate="required|minLength:10" required></textarea>
+                                <div class="character-count">
+                                    <span id="charCount">0</span> / 1000 characters
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="subscribe" name="subscribe">
+                                    <span class="checkmark"></span>
+                                    Subscribe to our newsletter for updates and parking tips
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="agreePrivacy" name="agreePrivacy" 
+                                           data-validate="required" required>
+                                    <span class="checkmark"></span>
+                                    I agree to the <a href="#" class="link">Privacy Policy</a> and 
+                                    <a href="#" class="link">Terms of Service</a> *
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="contact-info-section">
+                        <div class="info-header">
+                            <h2>Contact Information</h2>
+                            <p>Reach out to us through any of these channels</p>
+                        </div>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Email</h3>
+                                    <p>info@reservemyspot.com</p>
+                                    <p>support@reservemyspot.com</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Phone</h3>
+                                    <p>+1 (234) 567-8900</p>
+                                    <p>+1 (234) 567-8901 (Support)</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Address</h3>
+                                    <p>123 Parking Solutions Blvd</p>
+                                    <p>Tech City, TC 12345</p>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <div class="method-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="method-content">
+                                    <h3>Business Hours</h3>
+                                    <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                                    <p>Sat - Sun: 10:00 AM - 4:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-section">
+                            <h3>Follow Us</h3>
+                            <div class="social-links">
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-facebook"></i>
+                                    <span></span>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-twitter"></i>
+                                    <span> </span>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-linkedin"></i>
+                                    <span></span>
+                                </a>
+                                <a href="#" class="social-link">
+                                    <i class="fab fa-instagram"></i>
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="emergency-contact">
+                            <div class="emergency-header">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h3>Emergency Support</h3>
+                            </div>
+                            <p>For urgent parking-related issues, call our 24/7 emergency hotline:</p>
+                            <a href="tel:+12345678999" class="emergency-number">
+                                <i class="fas fa-phone"></i>
+                                +1 (234) 567-8999
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Find quick answers to common questions</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="contactManager.toggleFAQ(this)">
+                            <span>How do I book a parking slot?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can book a parking slot by visiting our "Book Slot" page, selecting your preferred location, entering your vehicle details, and choosing your desired time slot. You'll receive a confirmation with your access token immediately.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="contactManager.toggleFAQ(this)">
+                            <span>What if I can't find my booking confirmation?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can retrieve your booking information by visiting our token verification page and using your booking ID or phone number. If you still can't find it, contact our support team for assistance.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="contactManager.toggleFAQ(this)">
+                            <span>How do I cancel or modify my booking?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Currently, booking modifications and cancellations need to be handled through our customer support team. Please contact us at least 2 hours before your scheduled arrival time for changes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="contactManager.toggleFAQ(this)">
+                            <span>Is my personal information secure?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we use industry-standard encryption and security measures to protect your personal information. We never share your data with third parties without your explicit consent. Read our Privacy Policy for more details.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="contactManager.toggleFAQ(this)">
+                            <span>What happens if I'm late for my booking?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We provide a 15-minute grace period for all bookings. If you're running later than that, please contact the facility directly or our support team to check if your slot is still available.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock  %}
+
+{% block scripts %}
+    <script src="{% static 'js/contact.js' %}"></script>
+{% endblock  %}
+
+
+
