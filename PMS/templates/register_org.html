@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <form method = "post" action="{% url 'organization-list-create' %}" class="register-form" id="registerForm" >
+                    <form method = "post" action="{% url 'register' %}" class="register-form" id="registerForm" >
                         {% csrf_token %}
                         <!-- Step 1: Organization Info -->
                         <div class="form-step active" data-step="1">

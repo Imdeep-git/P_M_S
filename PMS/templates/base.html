@@ -58,18 +58,18 @@
                 <div class="footer-section">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="book_slot.html">Book Slot</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'book_slot' %}">Book Slot</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="login.html">Admin Login</a></li>
-                        <li><a href="register_org.html">Organization Registration</a></li>
-                        <li><a href="checkout.html">Token Verification</a></li>
+                        <li><a href="{% url 'login' %}">Admin Login</a></li>
+                        <li><a href="{% url 'register' %}">Organization Registration</a></li>
+                        <li><a href="{% url 'checkout' %}">Token Verification</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

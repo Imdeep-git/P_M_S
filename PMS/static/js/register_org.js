@@ -352,38 +352,27 @@ class RegistrationManager {
         }
     }
 
-    showSuccessMessage() {
-        const container = document.querySelector('.register-container');
-        container.innerHTML = `
-            <div class="success-animation">
-                <div class="success-icon">
-                    <i class="fas fa-check"></i>
-                </div>
-                <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Registration Successful!</h2>
-                <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                    Thank you for registering your organization with Reserve My Spot. 
-                    Your application is now under review and you will receive a confirmation email shortly.
-                </p>
-                <div style="margin-bottom: 2rem;">
-                    <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Next Steps:</h4>
-                    <ul style="text-align: left; color: var(--text-secondary); max-width: 400px; margin: 0 auto;">
-                        <li style="margin-bottom: 0.5rem;">Check your email for confirmation</li>
-                        <li style="margin-bottom: 0.5rem;">Admin review (1-2 business days)</li>
-                        <li style="margin-bottom: 0.5rem;">Account activation notification</li>
-                        <li>Access to organization dashboard</li>
-                    </ul>
-                </div>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <a href="index.html" class="btn btn-primary">
-                        <i class="fas fa-home"></i> Back to Home
-                    </a>
-                    <a href="login.html" class="btn btn-secondary">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </a>
-                </div>
+showSuccessMessage() {
+    const container = document.querySelector('.register-container');
+    container.innerHTML = `
+        <div class="success-animation">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
             </div>
-        `;
-    }
+            <h2 style="color: var(--text-primary); margin-bottom: 1rem;">Registration Successful!</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+                Thank you for registering your organization with Reserve My Spot. 
+                Your application is now under review and you will receive a confirmation email shortly.
+            </p>
+        </div>
+    `;
+
+    // Redirect after 3 seconds
+    setTimeout(() => {
+        window.location.href = '/';  // Home page URL
+    }, 3000); // 3000 ms = 3 seconds
+}
+
 
     getFieldLabel(field) {
         const label = field.closest('.form-group').querySelector('.form-label');

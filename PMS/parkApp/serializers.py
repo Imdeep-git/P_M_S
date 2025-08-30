@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Organization, ParkingSlot
+from .models import Organization, ParkingSlot,Booking
 
 class ParkingSlotSerializer(serializers.ModelSerializer):
     organization_name = serializers.CharField(source='organization.name', read_only=True)
@@ -30,4 +30,10 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
+        fields = '__all__'
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
         fields = '__all__'
