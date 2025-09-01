@@ -7,8 +7,10 @@ urlpatterns = [
     path('book_slot/', views.book_slot, name='book_slot'),
     path('booking_success/', views.booking_success, name='booking_success'),
     path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact'),
-    path('login/', views.login, name='login'),
+    path('contact/', views.contact, name='contact'), 
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+
     path('register/', views.register, name='register'),
     path('checkout/', views.checkout, name='checkout'),
     path('org_dashboard/',views.org_dashboard,name='org_dashboard'),

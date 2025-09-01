@@ -294,7 +294,7 @@ class OrgDashboard {
                     </div>
                     <div class="slot-detail-item">
                         <i class="fas fa-dollar-sign"></i>
-                        <span>$${slot.rate.toFixed(2)}/hour</span>
+                        <span>Rs.${slot.rate}/hour</span>
                     </div>
                     ${slot.customer ? `
                         <div class="slot-detail-item">
@@ -435,7 +435,7 @@ class OrgDashboard {
                     </div>
                     <div class="mobile-detail-item">
                         <span class="mobile-detail-label">Amount:</span>
-                        <span class="mobile-detail-value">$${booking.amount.toFixed(2)}</span>
+                        <span class="mobile-detail-value">Rs.${booking.amount}</span>
                     </div>
                 </div>
                 
@@ -490,7 +490,7 @@ class OrgDashboard {
                     <input type="text" name="location" placeholder="e.g., Level 1, Section A" required>
                 </div>
                 <div class="form-group">
-                    <label>Hourly Rate ($)</label>
+                    <label>Hourly Rate (Rs.)</label>
                     <input type="number" name="rate" step="0.01" min="0" placeholder="5.00" required>
                 </div>
                 <div class="modal-actions">
@@ -547,7 +547,7 @@ class OrgDashboard {
                     <input type="text" name="location" value="${slot.location}" required>
                 </div>
                 <div class="form-group">
-                    <label>Hourly Rate ($)</label>
+                    <label>Hourly Rate (Rs.)</label>
                     <input type="number" name="rate" step="0.01" min="0" value="${slot.rate}" required>
                 </div>
                 <div class="form-group">
@@ -666,7 +666,7 @@ class OrgDashboard {
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Amount:</span>
-                    <span class="detail-value">$${booking.amount.toFixed(2)}</span>
+                    <span class="detail-value">Rs.${booking.amount}</span>
                 </div>
             </div>
             <div class="modal-actions">

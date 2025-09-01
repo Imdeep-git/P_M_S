@@ -8,8 +8,17 @@ class LoginManager {
         this.roleTabs = document.querySelectorAll('.role-tab');
         this.demoFillBtns = document.querySelectorAll('.demo-fill-btn');
 
-        this.currentRole = 'admin';
+        this.currentRole = 'organization'; // Default role
         this.isLoading = false;
+
+        // Add hidden input for role if not present
+        if (this.loginForm && !this.loginForm.querySelector('input[name="role"]')) {
+            const roleInput = document.createElement('input');
+            roleInput.type = 'hidden';
+            roleInput.name = 'role';
+            roleInput.value = this.currentRole;
+            this.loginForm.appendChild(roleInput);
+        }
 
         this.init();
     }
@@ -18,25 +27,14 @@ class LoginManager {
         this.setupEventListeners();
         this.setupFormValidation();
         this.loadSavedCredentials();
-        this.switchRole(this.currentRole); // ✅ ensures Admin active at start
+        this.switchRole(this.currentRole);
     }
 
     setupEventListeners() {
         // Role tab switching
-      const roleTabs = document.querySelectorAll('.role-tab');
-
-  roleTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // Remove active from all
-      roleTabs.forEach(btn => btn.classList.remove('active'));
-
-      // Add active to clicked button
-      tab.classList.add('active');
-
-      // Example: show which one was clicked
-      console.log("Active role:", tab.dataset.role);
-    });
-  });
+        this.roleTabs.forEach(tab => {
+            tab.addEventListener('click', () => this.switchRole(tab.dataset.role));
+        });
 
         // Password toggle
         if (this.passwordToggle) {
@@ -63,7 +61,6 @@ class LoginManager {
     }
 
     setupFormValidation() {
-        // Custom validation messages
         if (this.emailInput) {
             this.emailInput.addEventListener('invalid', (e) => {
                 e.preventDefault();
@@ -79,9 +76,6 @@ class LoginManager {
         }
     }
 
-
-
-
     togglePasswordVisibility() {
         const type = this.passwordInput.type === 'password' ? 'text' : 'password';
         this.passwordInput.type = type;
@@ -89,16 +83,13 @@ class LoginManager {
         const icon = this.passwordToggle.querySelector('i');
         icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
 
-        // Add animation
         this.passwordToggle.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-            this.passwordToggle.style.transform = 'scale(1)';
-        }, 100);
+        setTimeout(() => this.passwordToggle.style.transform = 'scale(1)', 100);
     }
-
 
     typeText(element, text, callback) {
         let i = 0;
+        element.value = '';
         const typeInterval = setInterval(() => {
             element.value += text.charAt(i);
             i++;
@@ -162,95 +153,34 @@ class LoginManager {
     clearFieldError(field) {
         field.classList.remove('error', 'success');
         const existingError = field.parentElement.querySelector('.field-error');
-        if (existingError) {
-            existingError.remove();
-        }
+        if (existingError) existingError.remove();
     }
 
     async handleSubmit(e) {
         e.preventDefault();
-
         if (this.isLoading) return;
 
-        // Validate all fields
         const emailValid = this.validateField(this.emailInput);
         const passwordValid = this.validateField(this.passwordInput);
 
         if (!emailValid || !passwordValid) {
-            window.animationManager.showNotification('Please fix the errors and try again', 'error');
+            window.animationManager?.showNotification?.('Please fix the errors and try again', 'error');
             return;
         }
 
-        const formData = {
-            email: this.emailInput.value.trim(),
-            password: this.passwordInput.value,
-            role: this.currentRole,
-            rememberMe: document.getElementById('rememberMe')?.checked || false
-        };
+        // Update role before submission
+        const roleInput = this.loginForm.querySelector('input[name="role"]');
+        if (roleInput) {
+            roleInput.value = this.currentRole;
+        }
 
         this.setLoadingState(true);
-
-        try {
-            // Simulate API call
-            await this.simulateLogin(formData);
-
-            // Save credentials if remember me is checked
-            if (formData.rememberMe) {
-                this.saveCredentials(formData.email);
-            } else {
-                this.clearSavedCredentials();
-            }
-
-            // Show success message
-            window.animationManager.showNotification('Login successful! Redirecting...', 'success');
-
-            // Redirect based on role
-            setTimeout(() => {
-                if (formData.role === 'admin') {
-                    window.location.href = 'admin_dashboard.html';
-                } else {
-                    window.location.href = 'org_dashboard.html';
-                }
-            }, 1500);
-
-        } catch (error) {
-            window.animationManager.showNotification(error.message, 'error');
-            this.setLoadingState(false);
-        }
-    }
-
-    async simulateLogin(credentials) {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        // Check demo credentials
-        const validCredentials = [
-            { email: 'admin@reservemyspot.com', password: 'admin123', role: 'admin' },
-            { email: 'org@example.com', password: 'org123456', role: 'organization' }
-        ];
-
-        const isValid = validCredentials.some(cred =>
-            cred.email === credentials.email &&
-            cred.password === credentials.password &&
-            cred.role === credentials.role
-        );
-
-        if (!isValid) {
-            throw new Error('Invalid email or password. Please try again.');
-        }
-
-        // Store user data in session
-        window.utils.storage.set('user', {
-            email: credentials.email,
-            role: credentials.role,
-            loginTime: new Date().toISOString()
-        });
+        this.loginForm.submit();
     }
 
     setLoadingState(loading) {
         this.isLoading = loading;
         const submitBtn = this.loginForm.querySelector('.btn-login');
-        const submitIcon = submitBtn.querySelector('i');
 
         if (loading) {
             submitBtn.classList.add('loading');
@@ -264,58 +194,86 @@ class LoginManager {
     }
 
     saveCredentials(email) {
-        window.utils.storage.set('savedEmail', email);
+        window.utils?.storage?.set('savedEmail', email);
     }
 
     clearSavedCredentials() {
-        window.utils.storage.remove('savedEmail');
+        window.utils?.storage?.remove('savedEmail');
     }
 
     loadSavedCredentials() {
-        const savedEmail = window.utils.storage.get('savedEmail');
+        const savedEmail = window.utils?.storage?.get('savedEmail');
         if (savedEmail && this.emailInput) {
             this.emailInput.value = savedEmail;
             document.getElementById('rememberMe').checked = true;
         }
     }
+
+    // Role switching
+    switchRole(role) {
+        this.currentRole = role;
+        this.roleTabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.role === role);
+        });
+
+        // Update hidden role input value
+        const roleInput = this.loginForm.querySelector('input[name="role"]');
+        if (roleInput) {
+            roleInput.value = role;
+        }
+    }
+
+    // Fill demo credentials
+    fillDemoCredentials(btn) {
+        const role = btn.dataset.role;
+        let email = '';
+        let password = '';
+
+        if (role === 'admin') {
+            email = 'admin@reservemyspot.com';
+            password = 'admin123';
+        } else if (role === 'organization') {
+            email = 'org@example.com';
+            password = 'org123456';
+        }
+
+        this.switchRole(role);
+
+        this.typeText(this.emailInput, email, () => {
+            this.typeText(this.passwordInput, password, () => {
+                document.getElementById('rememberMe').checked = false;
+                this.loginForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            });
+        });
+    }
 }
 
-// Initialize login manager when DOM is loaded
+// Initialize login manager
 document.addEventListener('DOMContentLoaded', () => {
     new LoginManager();
 
-    // Add some interactive features
+    // Floating label effect
+    const formInputs = document.querySelectorAll('.form-input');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', () => input.parentElement.classList.add('focused'));
+        input.addEventListener('blur', () => {
+            if (!input.value) input.parentElement.classList.remove('focused');
+        });
+        if (input.value) input.parentElement.classList.add('focused');
+    });
+
+    // Role tab hover effect
     const roleTabsContainer = document.querySelector('.role-tabs');
     if (roleTabsContainer) {
-        roleTabsContainer.addEventListener('mouseover', (e) => {
+        roleTabsContainer.addEventListener('mouseover', e => {
             if (e.target.classList.contains('role-tab') && !e.target.classList.contains('active')) {
                 e.target.style.transform = 'scale(1.02)';
             }
         });
-
-        roleTabsContainer.addEventListener('mouseout', (e) => {
+        roleTabsContainer.addEventListener('mouseout', e => {
             if (e.target.classList.contains('role-tab') && !e.target.classList.contains('active')) {
                 e.target.style.transform = 'scale(1)';
             }
         });
     }
-
-    // Add floating label effect
-    const formInputs = document.querySelectorAll('.form-input');
-    formInputs.forEach(input => {
-        input.addEventListener('focus', () => {
-            input.parentElement.classList.add('focused');
-        });
-
-        input.addEventListener('blur', () => {
-            if (!input.value) {
-                input.parentElement.classList.remove('focused');
-            }
-        });
-
-        // Check if input has value on load
-        if (input.value) {
-            input.parentElement.classList.add('focused');
-        }
-    });
 });
