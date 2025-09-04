@@ -1,3 +1,4 @@
+# views.py
 from django.db.models import Sum, Q
 from datetime import datetime
 from django.shortcuts import render, redirect
@@ -10,10 +11,11 @@ from django.utils import timezone
 import qrcode
 import base64
 from io import BytesIO
-from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
 
@@ -33,7 +35,6 @@ def contact(request):
 
 def checkout(request):
     return render(request, "checkout.html")
-
 
 def org_dashboard(request):
     org_id = request.session.get('org_id')
@@ -73,10 +74,10 @@ def org_dashboard(request):
         'active_bookings': active_bookings,
         'available_slots': available_slots,
         'monthly_revenue': monthly_revenue,
+        'slots': slots,  # ✅ pass slots for dynamic display
     }
 
     return render(request, 'org_dashboard.html', context)
-
 
 def admin_dashboard(request):
     if not request.user.is_authenticated or not request.user.is_superuser:
@@ -143,7 +144,6 @@ def login_view(request):
                 return redirect('login')
 
             if check_password(password, org.password):
-                # ✅ Only allow org login, not admin
                 request.session['org_id'] = org.id
                 request.session['org_name'] = org.name
                 return redirect('org_dashboard')
@@ -155,14 +155,12 @@ def login_view(request):
         elif role == "admin":
             user = authenticate(request, username=email, password=password)
             if user is not None and user.is_superuser:
-                # ✅ Only allow admins to log in here
                 login(request, user)
                 return redirect('admin_dashboard')
             else:
                 messages.error(request, "Invalid admin credentials")
                 return redirect('login')
 
-        # --- Invalid role ---
         else:
             messages.error(request, "Please select a valid role")
             return redirect('login')
@@ -271,3 +269,66 @@ def booking_success(request):
         'pin': pin,
         'qr_img_base64': qr_img_base64
     })
+
+
+# ---------------- New Dashboard API Views ----------------
+
+class OrgDashboardStatsAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        org_id = request.session.get('org_id')
+        if not org_id:
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        org = Organization.objects.get(id=org_id)
+
+        total_slots = org.total_slots_2w + org.total_slots_4w
+        slots = ParkingSlot.objects.filter(organization=org)
+        available_slots = slots.aggregate(total_available=Sum('available_slots'))['total_available'] or 0
+        occupied_slots = slots.aggregate(total_occupied=Sum('total_slots') - Sum('available_slots'))['total_occupied'] or 0
+        now = timezone.now()
+        active_bookings = Booking.objects.filter(slot__organization=org, end_datetime__gte=now).count()
+
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        monthly_revenue = Booking.objects.filter(
+            slot__organization=org,
+            start_datetime__year=current_year,
+            start_datetime__month=current_month
+        ).aggregate(total_revenue=Sum('total_cost'))['total_revenue'] or 0
+
+        data = {
+            'total_slots': total_slots,
+            'available_slots': available_slots,
+            'occupied_slots': occupied_slots,
+            'active_bookings': active_bookings,
+            'monthly_revenue': monthly_revenue,
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+
+class OrgSlotsAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        org_id = request.session.get('org_id')
+        if not org_id:
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        slots = ParkingSlot.objects.filter(organization_id=org_id).order_by('id')
+        serializer = ParkingSlotSerializer(slots, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class OrgBookingsAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        org_id = request.session.get('org_id')
+        if not org_id:
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        bookings = Booking.objects.filter(slot__organization_id=org_id).order_by('-start_datetime')
+        serializer = BookingSerializer(bookings, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
